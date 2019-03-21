@@ -8,7 +8,6 @@ const BECH32 = require('bech32');
  */
 class Codec {}
 
-
 /**
  * 处理hex编码
  *
@@ -27,21 +26,22 @@ const hex = class {
         let hex = [];
         for (let i = 0; i < bytes.length; i++) {
             hex.push((bytes[i] >>> 4).toString(16));
-            hex.push((bytes[i] & 0xF).toString(16));
+            hex.push((bytes[i] & 0xf).toString(16));
         }
-        return hex.join("").toUpperCase();
+        return hex.join('').toUpperCase();
     }
 
-    static stringToHex(str){
+    static stringToHex(str) {
         let bytes = [];
-        for(var i = 0; i < str.length; i++){
+        for (var i = 0; i < str.length; i++) {
             bytes.push(str.charCodeAt(i).toString(16));
         }
-        return bytes.join("");
+        return bytes.join('');
     }
 
-    static isHex(str){
-        str = str.replace("0x","");
+    static isHex(str) {
+        if (!str) return false;
+        str = str.replace('0x', '');
         return /^[0-9a-fA-F]*$/i.test(str);
     }
 };
@@ -70,7 +70,7 @@ const bech32 = class {
      */
     static toBech32(prefix, str) {
         let strByte = BECH32.toWords(Buffer.from(str, 'hex'));
-        return BECH32.encode(prefix, strByte)
+        return BECH32.encode(prefix, strByte);
     }
 
     /**
@@ -81,25 +81,24 @@ const bech32 = class {
      */
     static isBech32(prefix, str) {
         if (!prefix || prefix.length == 0) {
-            return false
+            return false;
         }
 
         let preReg = new RegExp('^' + prefix + '1');
-        if (!preReg.test(str) ){
-            return false
+        if (!preReg.test(str)) {
+            return false;
         }
 
         let allReg = new RegExp(/^[0-9a-zA-Z]*$/i);
-        if (!allReg.test(str)){
-            return false
+        if (!allReg.test(str)) {
+            return false;
         }
 
         try {
             bech32.fromBech32(str);
-            return true
-        }catch (e) {
-            return false
-
+            return true;
+        } catch (e) {
+            return false;
         }
     }
 };

@@ -3,7 +3,6 @@
 const Config = require('./config');
 
 class Crypto {
-
     /**
      * 创建账户
      *
@@ -11,7 +10,7 @@ class Crypto {
      * @returns {{address, phrase, privateKey, publicKey}}
      */
     create(language) {
-        throw new Error("not implement");
+        throw new Error('not implement');
     }
 
     /**
@@ -22,7 +21,7 @@ class Crypto {
      * @returns {{address, phrase, privateKey, publicKey}}
      */
     recover(seedphrase, language) {
-        throw new Error("not implement");
+        throw new Error('not implement');
     }
 
     /**
@@ -32,7 +31,7 @@ class Crypto {
      * @returns {{address, privateKey, publicKey}}
      */
     import(privateKey) {
-        throw new Error("not implement");
+        throw new Error('not implement');
     }
 
     /**
@@ -42,7 +41,7 @@ class Crypto {
      * @returns {true | false}
      */
     isValidAddress(address) {
-        throw new Error("not implement");
+        throw new Error('not implement');
     }
 
     /**
@@ -53,7 +52,7 @@ class Crypto {
      * @returns {true | false}
      */
     isValidPrivate(privateKey) {
-        throw new Error("not implement");
+        throw new Error('not implement');
     }
 
     /**
@@ -62,7 +61,31 @@ class Crypto {
      * @param (publicKey:string('hex')} 公钥
      */
     getAddress(publicKey) {
-        throw new Error("not implement");
+        throw new Error('not implement');
+    }
+
+    /**
+     * 通过私钥和密码生成keyStore
+     *
+     * @param (privateKey:string('hex')} 私钥
+     * @param (password:string} 密码
+     *
+     * @returns { json }
+     */
+    toV3KeyStore(privateKey, password) {
+        throw new Error('not implement');
+    }
+
+    /**
+     * 通过keyStore和密码获取账户
+     *
+     * @param (keyStore:json} 私钥
+     * @param (password:string} 密码
+     *
+     * @returns { json }
+     */
+    fromV3KeyStore(keyStore, password) {
+        throw new Error('not implement');
     }
 
     /**
@@ -83,11 +106,10 @@ class Crypto {
                 return require('./chains/cosmos/cosmos_crypto')();
             }
             default: {
-                throw new Error("not correct chain");
+                throw new Error('not correct chain');
             }
         }
-
-    };
+    }
 }
 
 module.exports = Crypto;

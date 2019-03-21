@@ -30,7 +30,7 @@
         "prefix": "irishub/bank/StdTx"
       }
     },
-    "mode":{
+    "mode": {
       "try": "try",
       "normal": "normal"
     },
@@ -52,7 +52,7 @@
     "bip39Path": "44'/118'/0'/0/0"
   },
   "cosmos": {
-    "tx":{
+    "tx": {
       "transfer": {
         "type": "transfer",
         "prefix": "cosmos-sdk/MsgSend"
@@ -87,9 +87,9 @@
       }
     },
     "bech32": {
-      "accAddr": "cosmos",
-      "valAddr": "cosmosvaloper",
-      "accPub": "cosmospub"
+      "accAddr": "gard",
+      "valAddr": "gardvaloper",
+      "accPub": "gardpub"
     },
     "defaultCoding": "bech32",
     "coding": {

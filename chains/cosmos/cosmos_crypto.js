@@ -1,14 +1,13 @@
 'use strict';
-const Crypto = require("../../crypto");
+const Crypto = require('../../crypto');
 const Old = require('old');
 const CosmosKeypair = require('./cosmos_keypair');
-const Codec = require("../../util/codec");
-const Utils = require("../../util/utils");
+const Codec = require('../../util/codec');
+const Utils = require('../../util/utils');
 const Config = require('../../config');
 const Bip39 = require('bip39');
 
 class CosmosCrypto extends Crypto {
-    
     /**
      *
      * @param language
@@ -28,7 +27,7 @@ class CosmosCrypto extends Crypto {
     }
 
     recover(secret, language) {
-        let keyPair = CosmosKeypair.recover(secret,switchToWordList(language));
+        let keyPair = CosmosKeypair.recover(secret, switchToWordList(language));
         if (keyPair) {
             return encode({
                 address: keyPair.address,
@@ -65,25 +64,35 @@ class CosmosCrypto extends Crypto {
         address = Codec.Bech32.toBech32(Config.cosmos.bech32.accAddr, address);
         return address;
     }
+
+    toV3KeyStore(privateKey, password) {
+        const keyStore = CosmosKeypair.toV3KeyStore(privateKey, password);
+        return encode(keyStore);
+    }
+
+    fromV3KeyStore(keyStore, password) {
+        const acc = CosmosKeypair.fromV3KeyStore(keyStore, password);
+        return encode(acc);
+    }
 }
 
-function encode(acc){
-    if(!Utils.isEmpty(acc)){
-        switch (Config.cosmos.defaultCoding){
-            case Config.cosmos.coding.bech32:{
-                if (Codec.Hex.isHex(acc.address)){
-                    acc.address =  Codec.Bech32.toBech32(Config.cosmos.bech32.accAddr, acc.address);
+function encode(acc) {
+    if (!Utils.isEmpty(acc)) {
+        switch (Config.cosmos.defaultCoding) {
+            case Config.cosmos.coding.bech32: {
+                if (Codec.Hex.isHex(acc.address)) {
+                    acc.address = Codec.Bech32.toBech32(Config.cosmos.bech32.accAddr, acc.address);
                 }
-                if (Codec.Hex.isHex(acc.publicKey)){
+                if (Codec.Hex.isHex(acc.publicKey)) {
                     acc.publicKey = Codec.Bech32.toBech32(Config.cosmos.bech32.accPub, acc.publicKey);
                 }
             }
         }
-        return acc
+        return acc;
     }
 }
 
-function switchToWordList(language){
+function switchToWordList(language) {
     switch (language) {
         case Config.language.cn:
             return Bip39.wordlists.chinese_simplified;
