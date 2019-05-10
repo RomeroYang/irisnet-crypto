@@ -21,11 +21,11 @@ It mainly provides account generation, transaction construction and offline sign
     - WithdrawDelegatorReward transaction construction and signature
     - WithdrawValidatorCommission transaction construction and signature
     
-In addition, irIRISnet also supports hot and cold wallets, offline signatures of transactions by scanning code.
+In addition, IRISnet also supports hot and cold wallets, offline signatures of transactions by scanning code.
 ## Installation
 
 ```bash
-npm install irisnet-crypto
+npm install git+https://github.com/irisnet/irisnet-crypto.git
 ```
 
 ## Examples
@@ -63,7 +63,7 @@ let account = crypto.recover('your seed','your language');
 or via privateKey
 
 ```js
-let account = crypto.recover('your privateKey');
+let account = crypto.import('your privateKey');
 ```
 The difference between the above two is that the latter does not return the mnemonic of the account.
 
